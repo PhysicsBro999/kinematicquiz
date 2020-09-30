@@ -1,0 +1,138 @@
+from random import *
+from math import sqrt
+
+
+def questiongenerator():
+    #  This generates all the numbers for the question
+
+    determiner = randint(1, 2)
+    if determiner == 1:
+        a1 = -9.8
+    else:
+        a1 = randint(1, 10)
+
+    vi1 = randint(-23, 15)
+    if vi1 < 0:
+        vi1 = 0
+
+    eq = randint(1, 3)
+    if eq == 1:
+
+        t1 = randint(1, 25)
+        vf1 = round(a1 * t1 + vi1, 1)
+        missingvariable = randint(0, 3)
+        return [eq, missingvariable], [a1, vf1, vi1, t1]
+
+    elif eq == 2:
+        xi1 = randint(0, 10)
+        t1 = randint(0, 10)
+        xf1 = round(xi1 + vi1 * t1 - 1 / 2 * a1 * t1 ** 2, 1)
+        missingvariable = randint(0, 4)
+        return [eq, missingvariable], [a1, xf1, xi1, vi1, t1]
+    elif eq == 3:
+        if determiner == 1:
+            xf1 = 0
+            xi1 = randint(10, 50)
+        else:
+            xf2 = randint(1, 10)
+            xi1 = randint(0, 5)
+            xf1 = xf2 + xi1
+        vf1 = round(sqrt(vi1 ** 2 + 2 * a1 * (xf1 - xi1)), 1)
+        missingvariable = randint(0, 4)
+        return [eq, missingvariable], [a1, vf1, vi1, xi1, xf1]
+
+
+quizlength = int(input("How many questions would you like to practice?"))
+correctquestions = 0
+print("Round your answer to 1 decimal point. Do not enter units. The question will be marked incorrect.\n")
+for x in range(quizlength):
+    vinfo, var = questiongenerator()
+    answer = var[vinfo[1]]
+    print("Answer: ")
+    print(answer)
+    print("Equation")
+    print(print(vinfo[0]))
+    if vinfo[0] == 1:  # Equation: vf = vi + a(t)
+        a = var[0]
+        vf = var[1]
+        vi = var[2]
+        t = var[3]
+        if vinfo[1] == 0:  # solve for a
+            print("A particle starts from velocity " + str(vi) + " m/s and travels for " + str(t) + " seconds."
+                  + "The final velocity of the particle is " + str(vf) + "m/s. Find the acceleration.")
+        elif vinfo[1] == 1:  # solve for vf
+            print("A particle starts from velocity " + str(vi) + " m/s and travels for " + str(t) + " seconds."
+                  + "at a constant acceleration of " + str(a) + ". Find the final velocity of the particle.")
+        elif vinfo[1] == 2:  # solve for vi
+            print("A particle travels for " + str(t) + " seconds at a constant acceleration of " + str(a)
+                  + "m/s^2 . The final velocity of the particle is " + str(vf)
+                  + "m/s. Find the initial velocity of the particle.")
+        elif vinfo[1] == 3:  # solve for t
+            print("A particle starts at a velocity of " + str(vi) + " and ends at a velocity of " + str(vf) + "."
+                  + " The particle has constant acceleration " + str(a) + " m/s^2. How much time elapses?")
+        else:
+            print("ERROR 02: MISSING VARIABLE")
+    elif vinfo[0] == 2:
+        a = var[0]
+        xf = var[1]
+        xi = var[2]
+        vi = var[3]
+        t = var[4]
+        if vinfo[1] == 0:
+            print("A particle starts at position " + str(xi) + " m  and ends at " + str(xf) + " m over a period of"
+                  + str(t) + " seconds. The velocity of the particle at " + str(xi) + " m is " + str(vi) + " m/s."
+                  + " Find the acceleration of the particle within the given period.")
+        elif vinfo[1] == 1:
+            print("A particle moves from" + str(xi) + " m at " + str(vi) + " m/s and a contant acceleration of "
+                  + str(a) + " until it reaches the point " + str(xf) + " m over the course of " + str(t) + "seconds."
+                  + "What is the final position of the particle?")
+        elif vinfo[1] == 2:
+            print("A particle accelerates from " + str(vi) + " m/s at a contant acceleration of " + str(a)
+                  + " until it reaches the point " + str(xf) + " m over the course of " + str(t) + "seconds."
+                  + " What position did the particle start from?")
+        elif vinfo[1] == 3:
+            print("A particle moves from " + str(xi) + " m with a contant acceleration of "
+                  + str(a) + " until it reaches the point " + str(xf) + " m over the course of " + str(t) + "seconds."
+                  + "What velocity does the particle start at?")
+        elif vinfo[1] == 4:
+            print("A particle moves from " + str(xi) + " m to " + str(xf) + " m. Its acceleration is " + str(a)
+                  + "m/s^2 and its starting velocity is " + str(vi) + " s. Find how much time elapses.")
+        else:
+            print("ERROR 02: MISSING VARIABLE")
+    elif vinfo[0] == 3:
+        a = var[0]
+        vf = var[1]
+        vi = var[2]
+        xi = var[3]
+        xf = var[4]
+        if vinfo[1] == 0:
+            print("A particle starts at " + str(xi) + "m and " + str(vi) + " m/s. It finishes its motion at " + str(xf)
+                  + " m and" + str(vf) + " m/s. What is the particle's acceleration?")
+        elif vinfo[1] == 1:
+            print("A particle starts at " + str(xi) + "m and " + str(vi) + " m/s. It accelerates at a constant"
+                  + "acceleration of " + str(a) + "m/s^2 and finishes its motion at " + str(xf) + " m. "
+                  + " What is the particle's final velocity?")
+        elif vinfo[1] == 2:
+            print("A particle starts at " + str(xi) + "m with a constant acceleration of " + str(a) + " m/s^2")
+        elif vinfo[1] == 3:
+            print("A particle has acceleration " + str(a) + " m/s^2, initial velocity of " + str(vi) + " m/s, final "
+                  + "velocity of " + str(vf) + " m/s, and final position of " + str(xf) + " m. What is the particle's"
+                  + "initial position?")
+        elif vinfo[1] == 4:
+            print("A particle accelerates from " + str(vi) + " m/s to " + str(vf) + " m/s with a constant acceleration"
+                  + " of " + str(a) + " m/s^2. It starts at " + str(xi) + " m. What is the particle's final position?")
+        else:
+            print("ERROR 02: MISSING VARIABLE")
+    else:
+        print("ERROR 01. MISSING EQUATION")
+    useranswer = input("Answer here: ")
+    if useranswer == str(answer):
+        print("Correct.\n")
+        correctquestions = correctquestions + 1
+    else:
+        print("Incorrect. The correct answer is: " + str(answer) + "\n")
+if quizlength <= 0:
+    print("Please try again and enter a valid input.")
+else:
+    print("Quiz complete. Your score is  " + str(correctquestions) + "/" + str(quizlength) + ", or "
+          + str(round(100 * correctquestions / quizlength, 2)) + "%.")
