@@ -1,0 +1,52 @@
+from vector import vector
+from random import *
+qncorrect = 0
+qnumber = int(input("How many questions would you like to practice?"))
+for x in range(qnumber):
+    vector1 = vector(randint(-30, 30), randint(-30, 30), randint(-30, 30))
+    vector2 = vector(randint(-30, 30), randint(-30, 30), randint(-30, 30))
+    thirdvector = randint(1, 3)
+    if thirdvector == 3:
+        vector3 = vector(randint(-30, 30), randint(-30, 30), randint(-30, 30))
+    elif thirdvector == 1:
+        thirdvector = thirdvector + 1
+
+    addsubtract = randint(1, 2)
+    if addsubtract == 1:
+        print("Add the " + str(thirdvector) + " following vectors:")
+        answeri = vector1.i + vector2.i
+        answerj = vector1.j + vector2.j
+        answerk = vector1.k + vector2.k
+        if thirdvector == 1:
+            answeri = answeri + vector3.i
+            answerj = answerj + vector3.j
+            answerk = answerk + vector3.k
+    elif addsubtract == 2:
+        print("Subtract the " + str(thirdvector) + " following vectors:")
+        answeri = vector1.i - vector2.i
+        answerj = vector1.j - vector2.j
+        answerk = vector1.k - vector2.k
+        if thirdvector == 1:
+            answeri = answeri - vector3.i
+            answerj = answerj - vector3.j
+            answerk = answerk - vector3.k
+
+    print("Vector 1 = " + str(vector1.i) + "i + " + str(vector1.j) + "j + " + str(vector1.k) + "k")
+    print("Vector 2 = " + str(vector2.i) + "i + " + str(vector2.j) + "j + " + str(vector2.k) + "k")
+
+    if thirdvector == 3:
+        print("Vector 3 = " + str(vector3.i) + "i + " + str(vector3.j) + "j + " + str(vector3.k) + "k")
+
+
+    studentansweri = int(input("Please enter i:"))
+    studentanswerj = int(input("Please enter j:"))
+    studentanswerk = int(input("Please enter k:"))
+
+    if studentansweri == answeri and studentanswerj == answerj and studentanswerk == answerk:
+        print("Correct.\n")
+        qncorrect = qncorrect + 1
+    else:
+        print("Incorrect.")
+        print("The correct answer is: " + str(answeri) + "i + " + str(answerj) + "j + " + str(answerk) + "k\n")
+percentcorrect = qncorrect/qnumber * 100
+print("Quiz complete. Your score is " + str(qncorrect) + "/" + str(qnumber) + ", Or " + str(percentcorrect) + "%")
